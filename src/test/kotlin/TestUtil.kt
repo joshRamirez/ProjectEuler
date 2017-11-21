@@ -1,3 +1,4 @@
+import common.Util.getPrimeFactors
 import common.Util.getPrimesWithSieve
 import common.Util.isPalindrome
 import junit.framework.Assert.assertEquals
@@ -18,6 +19,21 @@ class TestUtil {
     @Test
     fun testIsPalindrome() {
         assertEquals(true, isPalindrome("900009"))
+    }
+
+    @Test
+    fun testGetPrimeFactorsOf4() {
+        assertEquals(mutableListOf(2, 2), getPrimeFactors(4))
+    }
+
+    @Test
+    fun testGetPrimeFactorsOf10() {
+        assertEquals(mutableListOf(2, 5), getPrimeFactors(10))
+    }
+
+    @Test
+    fun testGetPrimeFactorsOf60() {
+        assertEquals(mutableListOf(2, 2, 3, 5), getPrimeFactors(60))
     }
 
 }

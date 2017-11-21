@@ -2,13 +2,13 @@ package common
 
 object Util {
     fun getPrimesWithSieve(UpperLimit: Int): List<Int> {
-        val numsToUpperLimit = Array(UpperLimit, { true })
+        val numsToUpperLimit = Array(UpperLimit + 1, { true })
         numsToUpperLimit[0] = false
         numsToUpperLimit[1] = false
 
-        for (i in 2 until Math.sqrt(UpperLimit.toDouble()).toInt()) {
+        for (i in 2..Math.sqrt(UpperLimit.toDouble()).toInt()) {
             if (numsToUpperLimit[i]) {
-                for (j in i * i until UpperLimit step i) {
+                for (j in i * i..UpperLimit step i) {
                     numsToUpperLimit[j] = false
                 }
             }
@@ -52,5 +52,46 @@ object Util {
         }
 
         return false
+    }
+
+    fun getPrimeFactorFrequency(primeFactors: List<Int>): MutableMap<Int, Int> {
+        var frequencyMap = mutableMapOf<Int, Int>()
+
+        for (prime in primeFactors) {
+            if (frequencyMap.containsKey(prime)) {
+                frequencyMap[prime] = frequencyMap[prime]!! + 1
+            } else {
+                frequencyMap.put(prime, 1)
+            }
+        }
+
+        return frequencyMap
+    }
+
+    fun getPrimeFactors(num: Int): MutableList<Int> {
+        if (num < 1) {
+            return mutableListOf()
+        }
+
+        if (num == 2) {
+            return mutableListOf(2)
+        }
+        var test = num
+        val allPrimes = getPrimesWithSieve(test)
+        var primeCounter = 0
+        var primeFactors = mutableListOf<Int>()
+        while (!allPrimes.contains(test)) {
+            while (test % allPrimes[primeCounter] == 0) {
+                if (test == allPrimes[primeCounter]) {
+                    break
+                }
+                primeFactors.add(allPrimes[primeCounter])
+                test /= allPrimes[primeCounter]
+            }
+            primeCounter++
+        }
+        primeFactors.add(test)
+
+        return primeFactors
     }
 }
